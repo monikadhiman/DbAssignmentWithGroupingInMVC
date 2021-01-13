@@ -1,0 +1,71 @@
+﻿@model List<DbAssignment.DTO.GroupingMonth>
+
+@{
+    ViewData["Title"] = "Index";
+    string cDt = System.DateTime.Today.ToShortDateString();
+
+}
+
+<table border="1" width="100%">
+    <thead>
+        <tr>
+            <th colspan="2">Month</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model)
+        {
+            <tr>
+                <td>@s.MonthKey</td>
+                <td>
+                    <table border="1" width="100%">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Department</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@s.DeptKey</td>
+                                <td>
+                                    <table  width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Role</th>
+                                                <th>Name</th>
+                                                <th>Address</th>
+                                                <th>Registration Date</th>
+                                                <th>Refresh Date</th>
+                                                <th>Expire Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var e in s.UserDto)
+                                            {
+                                            <tr>
+                                                <td>@e.roleDto.Name</td>
+                                                <td> @e.Name</td>
+                                                <td> @e.Address</td>
+                                                <td>@e.RegistrationDt</td>
+                                                <td>@e.RefreshDt@{string reDt = e.RefreshDt;}</td>
+                                                <td>@e.ExpireDt@{string exDt = e.ExpireDt;}</td>
+                                                <td>
+
+
+                                                    <input type="button" @((((Convert.ToDateTime(@reDt)) <= (Convert.ToDateTime(@exDt))) && (((Convert.ToDateTime(@exDt)) != (Convert.ToDateTime(@cDt)))))? "" : "disabled" ) class="btn btn-primary" value="Activation" />
+                                                </td>
+                                            </tr>
+                                                        }
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+                                                        }
+    </tbody>
+</table>
